@@ -3,6 +3,7 @@ package main
 import (
 				"fmt"
 			  "strconv"
+				"time"
 				"github.com/jasonlvhit/gocron"
 )
 
@@ -11,11 +12,12 @@ var lastSupply = 0.0
 
 func task() {
 				fmt.Println("API call")
+				fmt.Println(time.Now())
 				cs, err := getSupply()
 				if (err != nil){
 				}
 				currentSupply, err := strconv.ParseFloat(cs, 32)
-				if (currentSupply != lastSupply && currentSupply != 0.0){
+				if ((currentSupply != lastSupply) && (currentSupply != 0.0)){
 					fmt.Println(err)
 					fmt.Printf("%.8f", currentSupply - lastSupply)
 					sendAlert(currentSupply)
@@ -23,9 +25,9 @@ func task() {
 				lastSupply = currentSupply
 }
 
-func taskWithParams(a int, b string) {
+/*func taskWithParams(a int, b string) {
 				fmt.Println(a, b)
-}
+}*/
 
 func main() {
 				// Do jobs with params
